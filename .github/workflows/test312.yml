@@ -64,7 +64,7 @@ jobs:
           PYVER: "3.12-dev"
         run: |
           export MODULE_BUILDTYPE=static
-          export PYTHON_CONFIGURE_OPTS="--enable-shared"
+          export PYTHON_CONFIGURE_OPTS="--enable-shared --disable-test-modules"
           set -xe
           export PYENV_ROOT="$HOME/.pyenv"
           export PATH="$PYENV_ROOT/bin:$PATH"
