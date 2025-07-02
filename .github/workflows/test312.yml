@@ -57,7 +57,7 @@ jobs:
 
           sed -i 's|^install_git.*|install_package "Python-3.12-dev" "https://example.com/invalid"|' "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev"
 
-          git clone --branch 3.12 --single-branch https://github.com/python/cpython.git
+          git clone --branch v3.12.11 --single-branch https://github.com/python/cpython.git
           cd cpython
           git archive --format=tar --prefix=Python-3.12-dev/ HEAD | gzip > Python-3.12-dev.tar.gz
           mkdir -p $PYENV_ROOT/cache
