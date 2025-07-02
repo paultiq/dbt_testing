@@ -53,7 +53,7 @@ jobs:
           eval "$(pyenv init --path)"
           pyenv install $PYVER -v
           pyenv global ${{ matrix.python-version }}
-
+          pyenv rehash
           # sudo ln -sf $PYENV_ROOT/versions/$PYVER/bin/python3 /usr/local/bin/python
           # https://gist.github.com/dukenmarga/3b055616ecef3b38a52de0ad81b67c2a
           # said to:
