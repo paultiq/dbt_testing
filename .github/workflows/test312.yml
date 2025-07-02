@@ -37,7 +37,7 @@ jobs:
       #   uses: lhotari/action-upterm@v1
       - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
-          packages: build-essential pkg-config ccache gdb lcov libb2-dev libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev libzstd-dev lzma lzma-dev strace tk-dev uuid-dev xvfb zlib1g-dev
+          packages: build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
           version: 1.0
       - name: "Install pyenv"
         run: |
