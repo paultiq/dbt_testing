@@ -8,7 +8,7 @@ permissions:
 jobs:
   ubuntu_build:
     strategy:
-      fail-fast: False
+      fail-fast: false
       matrix:
         python-version:
           # - "3.11-dev"
@@ -19,14 +19,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          git clone https://github.com/pyenv/pyenv
+          curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+          #git clone https://github.com/pyenv/pyenv
       - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
           packages: build-essential pkg-config ccache gdb lcov libb2-dev libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev libzstd-dev lzma lzma-dev strace tk-dev uuid-dev xvfb zlib1g-dev
           version: 1.0
       - run: pwd
       - env:
-          PYENV_ROOT: ./pyenv
+          PYENV_ROOT: "$HOME/.pyenv"
         run: |
           set -xe
           #export PYENV_ROOT="$HOME/.pyenv"
