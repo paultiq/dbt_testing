@@ -74,6 +74,15 @@ jobs:
       - name: "Install pyenv"
         run: |
           curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+      - name: "Prepare cpython version"
+        run: |
+          git clone --branch 3.12 --single-branch https://github.com/python/cpython.git
+          # cd cpython && git checkout <commit-sha>
+          make dist  # creates a tarball
+
+          mkdir -p ~/.pyenv/cache
+          cp dist/python-*.tar.gz ~/.pyenv/cache/
+
       - name: "Build Python ${{ matrix.python-version }}"
         env:
           PYVER: "${{ matrix.python-version }}-dev"
