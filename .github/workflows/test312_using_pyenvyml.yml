@@ -30,7 +30,7 @@ jobs:
       # https://github.com/pyenv/pyenv#installation
       - run: pwd
       - env:
-          PYENV_ROOT: /home/runner/work/dbt_testing/pyenv
+          PYENV_ROOT: "$HOME/pyenv"
         run: |
           echo $PYENV_ROOT
           echo "$PYENV_ROOT/shims:$PYENV_ROOT/bin" >> $GITHUB_PATH
