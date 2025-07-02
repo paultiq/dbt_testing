@@ -37,41 +37,10 @@ jobs:
           persist-credentials: false
       # - name: Setup upterm session
       #   uses: lhotari/action-upterm@v1
-      - name: "Install system dependencies"
-        run: |
-          sudo apt-get update
-
-          sudo apt-get -yq install \
-              build-essential \
-              pkg-config \
-              ccache \
-              gdb \
-              lcov \
-              libb2-dev \
-              libbz2-dev \
-              libffi-dev \
-              libgdbm-dev \
-              libgdbm-compat-dev \
-              liblzma-dev \
-              libncurses5-dev \
-              libreadline6-dev \
-              libsqlite3-dev \
-              libssl-dev \
-              libzstd-dev \
-              lzma \
-              lzma-dev \
-              strace \
-              tk-dev \
-              uuid-dev \
-              xvfb \
-              zlib1g-dev
-
-          # Workaround missing libmpdec-dev on ubuntu 24.04:
-          # https://launchpad.net/~ondrej/+archive/ubuntu/php
-          # https://deb.sury.org/
-          sudo add-apt-repository ppa:ondrej/php
-          sudo apt-get update
-          sudo apt-get -yq install libmpdec-dev
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: build-essential pkg-config ccache gdb lcov libb2-dev libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev libzstd-dev lzma lzma-dev strace tk-dev uuid-dev xvfb zlib1g-dev
+          version: 1.0
       - name: "Install pyenv"
         run: |
           curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
@@ -82,9 +51,11 @@ jobs:
           export PYENV_ROOT="$HOME/.pyenv"
 
           # "skip" download 3.12-dev
+          cp "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev".orig "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev"
+
           cp "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev" "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev".orig
 
-          sed -i 's|^install_git.*|install_package "Python-3.12-dev" "https://example.com/invalid"\ninstall_python standard verify_py312 copy_python_gdb ensurepip|' "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev"
+          sed -i 's|^install_git.*|install_package "Python-3.12-dev.tar.gz" "https://example.com/invalid"\ninstall_python standard verify_py312 copy_python_gdb ensurepip|' "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev"
 
           git clone --branch 3.12 --single-branch https://github.com/python/cpython.git
           cd cpython
