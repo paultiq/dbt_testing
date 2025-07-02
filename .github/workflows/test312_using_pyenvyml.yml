@@ -53,7 +53,6 @@ jobs:
 
           # $PYENV_ROOT/bin/pyenv global ${{ matrix.python-version }}
           # $PYENV_ROOT/bin/pyenv rehash
-            - name: "What's in pyenv"
       - run: |
           export PYENV_ROOT="$HOME/.pyenv"
           ls -lR $PYENV_ROOT/versions
