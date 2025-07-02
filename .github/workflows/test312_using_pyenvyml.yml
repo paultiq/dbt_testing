@@ -14,9 +14,10 @@ jobs:
     name: "${{ matrix.python-version }}"
     strategy:
       fail-fast: false
-      os: 
-        - "ubuntu-latest"
+      
       matrix:
+        os: 
+          - "ubuntu-latest"
         python-version:
           # - "3.11-dev"
           - "3.12-dev"
