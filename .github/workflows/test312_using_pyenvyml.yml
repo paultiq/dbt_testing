@@ -46,7 +46,7 @@ jobs:
           # echo $PYENV_ROOT
           # echo "$PYENV_ROOT/shims:$PYENV_ROOT/bin" >> $GITHUB_PATH
           # $PYENV_ROOT/bin/pyenv --debug install ${{ matrix.python-version }}
-          sudo ln -sf $PYENV_ROOT/versions/$PYVER/bin/python3 /usr/local/bin/python
+          sudo ln -sf $PYENV_ROOT/versions/3.12/bin/python3 /usr/local/bin/python
 
           # $PYENV_ROOT/bin/pyenv global ${{ matrix.python-version }}
           # $PYENV_ROOT/bin/pyenv rehash
