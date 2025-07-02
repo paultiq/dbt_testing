@@ -76,12 +76,16 @@ jobs:
           curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
       - name: "Prepare cpython version"
         run: |
-          git clone --branch 3.12 --single-branch https://github.com/python/cpython.git
-          # cd cpython && git checkout <commit-sha>
-          make dist  # creates a tarball
+          # "skip" download 3.12-dev
+          cp "$(pyenv root)/plugins/python-build/share/python-build/3.12-dev" "$(pyenv root)/plugins/python-build/share/python-build/3.12-dev".orig
 
+          sed -i 's|^install_git.*|install_package "Python-3.12-dev" "https://example.com/invalid"\ninstall_python standard verify_py312 copy_python_gdb ensurepip|' "$(pyenv root)/plugins/python-build/share/python-build/3.12-dev"
+
+          git clone --branch 3.12 --single-branch https://github.com/python/cpython.git
+          cd cpython
+          git archive --format=tar --prefix=Python-3.12-dev/ HEAD | gzip > Python-3.12-dev.tar.gz
           mkdir -p ~/.pyenv/cache
-          cp dist/python-*.tar.gz ~/.pyenv/cache/
+          cp Python-3.12-dev.tar.gz ~/.pyenv/cache/
 
       - name: "Build Python ${{ matrix.python-version }}"
         env:
