@@ -7,13 +7,13 @@ permissions:
 jobs:
   ubuntu_build:
     strategy:
-      fail-fast: false
+      fail-fast: True
       matrix:
         python-version:
-          - "3.11-dev"
-          - "3.12-dev"
+          #- "3.11-dev"
+          #- "3.12-dev"
           - "3.11"
-          - "3.12"
+          #- "3.12"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,9 +34,9 @@ jobs:
         run: |
           echo $PYENV_ROOT
           echo "$PYENV_ROOT/shims:$PYENV_ROOT/bin" >> $GITHUB_PATH
-          bin/pyenv --debug install ${{ matrix.python-version }}
-          bin/pyenv global ${{ matrix.python-version }}
-          bin/pyenv rehash
+          $PYENV_ROOT/bin/pyenv --debug install ${{ matrix.python-version }}
+          $PYENV_ROOT/bin/pyenv global ${{ matrix.python-version }}
+          $PYENV_ROOT/bin/pyenv rehash
       - run: python --version
       - run: python -m pip --version
       - shell: python  # Prove that actual Python == expected Python
