@@ -26,11 +26,9 @@ jobs:
           packages: build-essential pkg-config ccache gdb lcov libb2-dev libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev libzstd-dev lzma lzma-dev strace tk-dev uuid-dev xvfb zlib1g-dev
           version: 1.0
       - run: pwd
-      - env:
-          PYENV_ROOT: $HOME/.pyenv
-        run: |
+      - run: |
           set -xe
-          #export PYENV_ROOT="$HOME/.pyenv"
+          export PYENV_ROOT="$HOME/.pyenv"
           export PATH="$PYENV_ROOT/bin:$PATH"
           eval "$(pyenv init --path)"
           $PYENV_ROOT/bin/pyenv --debug install ${{ matrix.python-version }} -v
