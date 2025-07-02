@@ -55,7 +55,7 @@ jobs:
 
           cp "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev" "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev".orig
 
-          sed -i 's|^install_git.*|install_package "Python-3.12-dev" "https://example.com/invalid"\ninstall_python standard verify_py312 copy_python_gdb ensurepip|' "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev"
+          sed -i 's|^install_git.*|install_package "Python-3.12-dev" "https://example.com/invalid"\ninstall_python|' "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev"
 
           git clone --branch 3.12 --single-branch https://github.com/python/cpython.git
           cd cpython
