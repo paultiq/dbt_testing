@@ -79,6 +79,8 @@ jobs:
 
       - name: "Prepare cpython version"
         run: |
+          export PYENV_ROOT="$HOME/.pyenv"
+
           # "skip" download 3.12-dev
           cp "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev" "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev".orig
 
