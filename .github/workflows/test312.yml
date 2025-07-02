@@ -1,4 +1,4 @@
-name: "Python Nightly 2 Tests"
+name: "Build 3.12.11"
 
 on:
   workflow_dispatch:
