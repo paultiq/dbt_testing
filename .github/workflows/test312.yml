@@ -35,7 +35,8 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
-
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
       - name: "Install system dependencies"
         run: |
           sudo apt-get update
