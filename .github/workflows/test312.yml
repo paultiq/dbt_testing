@@ -72,6 +72,10 @@ jobs:
       #  run: |
       #    export PYENV_ROOT="$HOME/.pyenv"
       #    ls -lR /usr/local/lib
+
+      - name: "Install Tox"
+        run: |
+          python -m pip install tox
       - name: "Run tox"
         run: |
           python -m tox -v -- -rfsEX
