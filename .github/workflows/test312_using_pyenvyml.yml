@@ -2,20 +2,26 @@ name: ubuntu_build
 on:
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash
+
 permissions:
   contents: read  #  to fetch code (actions/checkout)
 
 jobs:
   ubuntu_build:
+    name: "${{ matrix.python-version }}"
     strategy:
       fail-fast: false
+      os: 
+        - "ubuntu-latest"
       matrix:
         python-version:
           # - "3.11-dev"
           - "3.12-dev"
           # - "3.11"
           # - "3.12"
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: |
