@@ -57,6 +57,7 @@ jobs:
       - run: |
           export PYENV_ROOT="$HOME/.pyenv"
           ls -lR $PYENV_ROOT/versions
+          ls -lR /usr/local/bin/python
       - run: python --version
       - run: python -m pip --version
       - shell: python  # Prove that actual Python == expected Python
