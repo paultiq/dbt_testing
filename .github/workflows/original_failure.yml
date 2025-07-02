@@ -1,4 +1,4 @@
-name: "Python Nightly 2 Tests"
+name: "Original Failing"
 
 on:
   workflow_dispatch:
