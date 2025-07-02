@@ -45,26 +45,23 @@ jobs:
           export PYENV_ROOT="$HOME/.pyenv"
 
       - name: "Prepare cpython version"
-        env:
-          PYVER: "3.12.11"
         run: |
           export PYENV_ROOT="$HOME/.pyenv"
 
-          #cp "$PYENV_ROOT/plugins/python-build/share/python-build/$PYVER".orig "$PYENV_ROOT/plugins/python-build/share/python-build/$PYVER"
 
-          cp "$PYENV_ROOT/plugins/python-build/share/python-build/$PYVER" "$PYENV_ROOT/plugins/python-build/share/python-build/$PYVER".orig
+          cp "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev" "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev".orig
 
-          sed -i 's|^install_git.*|install_package "Python-$PYVER" "https://example.com/invalid"|' "$PYENV_ROOT/plugins/python-build/share/python-build/$PYVER"
+          sed -i 's|^install_git.*|install_package "Python-3.12-dev" "https://example.com/invalid"|' "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev"
 
           git clone --branch v3.12.11 --single-branch https://github.com/python/cpython.git
           cd cpython
-          git archive --format=tar --prefix=Python-$PYVER/ HEAD | gzip > Python-$PYVER.tar.gz
+          git archive --format=tar --prefix=Python-3.12-dev/ HEAD | gzip > Python-3.12-dev.tar.gz
           mkdir -p $PYENV_ROOT/cache
-          cp Python-$PYVER.tar.gz $PYENV_ROOT/cache/
+          cp Python-3.12-dev.tar.gz $PYENV_ROOT/cache/
 
       - name: "Build Python"
         env:
-          PYVER: "3.12.11"
+          PYVER: "3.12-dev"
         run: |
           set -xe
           export PYENV_ROOT="$HOME/.pyenv"
