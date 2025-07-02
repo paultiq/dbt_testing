@@ -33,8 +33,8 @@ jobs:
           export PATH="$PYENV_ROOT/bin:$PATH"
           eval "$(pyenv init --path)"
           $PYENV_ROOT/bin/pyenv --debug install ${{ matrix.python-version }} -v
-          $PYENV_ROOT/bin/pyenv global ${{ matrix.python-version }}
-          $PYENV_ROOT/bin/pyenv rehash
+          #$PYENV_ROOT/bin/pyenv global ${{ matrix.python-version }}
+          #$PYENV_ROOT/bin/pyenv rehash
           # echo $PYENV_ROOT
           # echo "$PYENV_ROOT/shims:$PYENV_ROOT/bin" >> $GITHUB_PATH
           # $PYENV_ROOT/bin/pyenv --debug install ${{ matrix.python-version }}
