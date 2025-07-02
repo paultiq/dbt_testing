@@ -27,7 +27,7 @@ jobs:
           version: 1.0
       - run: pwd
       - env:
-          PYENV_ROOT: "$HOME/.pyenv"
+          PYENV_ROOT: $HOME/.pyenv
         run: |
           set -xe
           #export PYENV_ROOT="$HOME/.pyenv"
