@@ -12,7 +12,7 @@ permissions:
 jobs:
   ubuntu_build:
     name: "${{ matrix.python-version }}"
-    name: "${{ matrix.os }}"
+    runs-on: "${{ matrix.os }}"
 
     strategy:
       fail-fast: false
