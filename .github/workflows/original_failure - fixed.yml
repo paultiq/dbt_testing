@@ -52,6 +52,8 @@ jobs:
           export PATH="$PYENV_ROOT/bin:$PATH"
           eval "$(pyenv init --path)"
           pyenv install $PYVER -v
+          pyenv global ${{ matrix.python-version }}
+
           # sudo ln -sf $PYENV_ROOT/versions/$PYVER/bin/python3 /usr/local/bin/python
           # https://gist.github.com/dukenmarga/3b055616ecef3b38a52de0ad81b67c2a
           # said to:
@@ -62,7 +64,7 @@ jobs:
           ls -lR $PYENV_ROOT/versions
       - name: "Try the thing"
         run: |
-          $HOME/.pyenv/versions/"${{ matrix.python-version }}-dev"/bin/python3 -c "import _posixsubprocess as psp; print(psp)"
+          python -c "import _posixsubprocess as psp; print(psp)"
       #- name: "What's in /usr/local/lib64"
       #  run: |
       #    export PYENV_ROOT="$HOME/.pyenv"
@@ -75,7 +77,7 @@ jobs:
 
       - name: "Install Tox"
         run: |
-          $HOME/.pyenv/versions/"${{ matrix.python-version }}-dev"/bin/python3 -m pip install tox
+          python -m pip install tox
       - name: "Run tox"
         run: |
-          $HOME/.pyenv/versions/"${{ matrix.python-version }}-dev"/bin/python3 -m tox -v -- -rfsEX
+          python -m tox -v -- -rfsEX
