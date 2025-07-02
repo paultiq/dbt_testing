@@ -20,13 +20,24 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           git clone https://github.com/pyenv/pyenv
-          # sudo apt-get update -q; sudo apt install -yq make build-essential libssl-dev zlib1g-dev \
-          # libbz2-dev libreadline-dev libsqlite3-dev curl \
-          # libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
-          sudo apt-get update -q;
-          # original from coverage.py:
-          sudo apt-get install -yq build-essential pkg-config ccache gdb lcov libb2-dev libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev libzstd-dev lzma lzma-dev strace tk-dev uuid-dev xvfb zlib1g-dev
+
+          # from pyenv action - 
+          # sudo apt-get update -q; sudo apt install -yq make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+          
+          # from coverage.py - 
+          sudo apt-get update -q; sudo apt-get install -yq build-essential pkg-config ccache gdb lcov libb2-dev libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev libzstd-dev lzma lzma-dev strace tk-dev uuid-dev xvfb zlib1g-dev
       # https://github.com/pyenv/pyenv#installation
+      - name: "Install system dependencies"
+        run: |
+          echo BEFORE
+          cat /etc/apt/sources.list.d/ubuntu.sources
+          # https://wbk.one/article/42a272c3/apt-get-build-dep-to-install-build-deps
+          sudo sed -i.bak 's/^Types: deb$/Types: deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
+          echo AFTER
+          cat /etc/apt/sources.list.d/ubuntu.sources
+          sudo apt-get update
+          #sudo apt-get install -y libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev libffi-dev
+          sudo apt-get build-dep -y python3
       - run: pwd
       - env:
           PYENV_ROOT: ./pyenv
