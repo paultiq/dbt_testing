@@ -35,8 +35,8 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
+      # - name: Setup upterm session
+      #   uses: lhotari/action-upterm@v1
       - name: "Install system dependencies"
         run: |
           sudo apt-get update
@@ -75,18 +75,20 @@ jobs:
       - name: "Install pyenv"
         run: |
           curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+          export PYENV_ROOT="$HOME/.pyenv"
+
       - name: "Prepare cpython version"
         run: |
           # "skip" download 3.12-dev
-          cp "$(pyenv root)/plugins/python-build/share/python-build/3.12-dev" "$(pyenv root)/plugins/python-build/share/python-build/3.12-dev".orig
+          cp "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev" "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev".orig
 
-          sed -i 's|^install_git.*|install_package "Python-3.12-dev" "https://example.com/invalid"\ninstall_python standard verify_py312 copy_python_gdb ensurepip|' "$(pyenv root)/plugins/python-build/share/python-build/3.12-dev"
+          sed -i 's|^install_git.*|install_package "Python-3.12-dev" "https://example.com/invalid"\ninstall_python standard verify_py312 copy_python_gdb ensurepip|' "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev"
 
           git clone --branch 3.12 --single-branch https://github.com/python/cpython.git
           cd cpython
           git archive --format=tar --prefix=Python-3.12-dev/ HEAD | gzip > Python-3.12-dev.tar.gz
-          mkdir -p ~/.pyenv/cache
-          cp Python-3.12-dev.tar.gz ~/.pyenv/cache/
+          mkdir -p $PYENV_ROOT/cache
+          cp Python-3.12-dev.tar.gz $PYENV_ROOT/cache/
 
       - name: "Build Python ${{ matrix.python-version }}"
         env:
