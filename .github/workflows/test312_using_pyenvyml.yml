@@ -1,5 +1,6 @@
 name: ubuntu_build
-on: [pull_request, push]
+on:
+  workflow_dispatch:
 
 permissions:
   contents: read  #  to fetch code (actions/checkout)
@@ -17,16 +18,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # Normally, we would use the superbly maintained...
-      # - uses: actions/setup-python@v2
-      #   with:
-      #    python-version: ${{ matrix.python-version }}
-      # ... but in the repo, we want to test pyenv builds on Ubuntu
       - run: |
           git clone https://github.com/pyenv/pyenv
-          sudo apt-get update -q; sudo apt install -yq make build-essential libssl-dev zlib1g-dev \
-          libbz2-dev libreadline-dev libsqlite3-dev curl \
-          libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+          # sudo apt-get update -q; sudo apt install -yq make build-essential libssl-dev zlib1g-dev \
+          # libbz2-dev libreadline-dev libsqlite3-dev curl \
+          # libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+          sudo apt-get update -q;
+          # original from coverage.py:
+          sudo apt-get build-essential pkg-config ccache gdb lcov libb2-dev libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev libzstd-dev lzma lzma-dev strace tk-dev uuid-dev xvfb zlib1g-dev
       # https://github.com/pyenv/pyenv#installation
       - run: pwd
       - env:
