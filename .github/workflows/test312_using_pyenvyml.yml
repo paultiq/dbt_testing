@@ -1,4 +1,5 @@
 name: ubuntu_build
+
 on:
   workflow_dispatch:
 
@@ -13,6 +14,8 @@ jobs:
   ubuntu_build:
     name: "${{ matrix.python-version }}"
     runs-on: "${{ matrix.os }}"
+
+    timeout-minutes: 60
 
     strategy:
       fail-fast: false
@@ -46,10 +49,14 @@ jobs:
           # echo $PYENV_ROOT
           # echo "$PYENV_ROOT/shims:$PYENV_ROOT/bin" >> $GITHUB_PATH
           # $PYENV_ROOT/bin/pyenv --debug install ${{ matrix.python-version }}
-          sudo ln -sf $PYENV_ROOT/versions/3.12/bin/python3 /usr/local/bin/python
+          sudo ln -sf $PYENV_ROOT/versions/3.12-dev/bin/python3 /usr/local/bin/python
 
           # $PYENV_ROOT/bin/pyenv global ${{ matrix.python-version }}
           # $PYENV_ROOT/bin/pyenv rehash
+            - name: "What's in pyenv"
+      - run: |
+          export PYENV_ROOT="$HOME/.pyenv"
+          ls -lR $PYENV_ROOT/versions
       - run: python --version
       - run: python -m pip --version
       - shell: python  # Prove that actual Python == expected Python
