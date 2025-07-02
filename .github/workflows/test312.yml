@@ -1,4 +1,4 @@
-name: "Build 3.12.11"
+name: "Python Nightly 2 Tests"
 
 on:
   workflow_dispatch:
@@ -25,8 +25,6 @@ jobs:
       matrix:
         os:
           - "ubuntu-latest"
-        python-version:
-          - "3.12"
 
       fail-fast: false
 
@@ -47,25 +45,26 @@ jobs:
           export PYENV_ROOT="$HOME/.pyenv"
 
       - name: "Prepare cpython version"
+        env:
+          PYVER: "3.12.11"
         run: |
           export PYENV_ROOT="$HOME/.pyenv"
 
-          # "skip" download 3.12-dev
-          #cp "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev".orig "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev"
+          #cp "$PYENV_ROOT/plugins/python-build/share/python-build/$PYVER".orig "$PYENV_ROOT/plugins/python-build/share/python-build/$PYVER"
 
-          cp "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev" "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev".orig
+          cp "$PYENV_ROOT/plugins/python-build/share/python-build/$PYVER" "$PYENV_ROOT/plugins/python-build/share/python-build/$PYVER".orig
 
-          sed -i 's|^install_git.*|install_package "Python-3.12-dev" "https://example.com/invalid"|' "$PYENV_ROOT/plugins/python-build/share/python-build/3.12-dev"
+          sed -i 's|^install_git.*|install_package "Python-$PYVER" "https://example.com/invalid"|' "$PYENV_ROOT/plugins/python-build/share/python-build/$PYVER"
 
           git clone --branch v3.12.11 --single-branch https://github.com/python/cpython.git
           cd cpython
-          git archive --format=tar --prefix=Python-3.12-dev/ HEAD | gzip > Python-3.12-dev.tar.gz
+          git archive --format=tar --prefix=Python-$PYVER/ HEAD | gzip > Python-$PYVER.tar.gz
           mkdir -p $PYENV_ROOT/cache
-          cp Python-3.12-dev.tar.gz $PYENV_ROOT/cache/
+          cp Python-$PYVER.tar.gz $PYENV_ROOT/cache/
 
-      - name: "Build Python ${{ matrix.python-version }}"
+      - name: "Build Python"
         env:
-          PYVER: "${{ matrix.python-version }}-dev"
+          PYVER: "3.12.11"
         run: |
           set -xe
           export PYENV_ROOT="$HOME/.pyenv"
