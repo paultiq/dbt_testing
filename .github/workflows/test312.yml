@@ -43,9 +43,9 @@ jobs:
       - name: "Install pyenv"
         run: |
           curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-      - name: "Build Python ${{ matrix.python-version }}-dev"
+      - name: "Build Python ${{ matrix.python-version }}"
         env:
-          PYVER: "${{ matrix.python-version }}-dev"
+          PYVER: "${{ matrix.python-version }}"
         run: |
           set -xe
           export PYENV_ROOT="$HOME/.pyenv"
