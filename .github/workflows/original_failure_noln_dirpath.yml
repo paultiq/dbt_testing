@@ -62,7 +62,7 @@ jobs:
           ls -lR $PYENV_ROOT/versions
       - name: "Try the thing"
         run: |
-          $PYENV_ROOT/versions/$PYVER/bin/python3 -c "import _posixsubprocess as psp; print(psp)"
+          $PYENV_ROOT/versions/"${{ matrix.python-version }}-dev"/bin/python3 -c "import _posixsubprocess as psp; print(psp)"
       #- name: "What's in /usr/local/lib64"
       #  run: |
       #    export PYENV_ROOT="$HOME/.pyenv"
@@ -75,7 +75,7 @@ jobs:
 
       - name: "Install Tox"
         run: |
-          $PYENV_ROOT/versions/$PYVER/bin/python3 -m pip install tox
+          $PYENV_ROOT/versions/"${{ matrix.python-version }}-dev"/bin/python3 -m pip install tox
       - name: "Run tox"
         run: |
-          $PYENV_ROOT/versions/$PYVER/bin/python3 -m tox -v -- -rfsEX
+          $PYENV_ROOT/versions/"${{ matrix.python-version }}-dev"/bin/python3 -m tox -v -- -rfsEX
